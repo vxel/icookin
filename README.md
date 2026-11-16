@@ -14,6 +14,20 @@ time.
 Add `cacerts/35105088.0` (USERTrust RSA Certification Authority) to the tablet's system CA store.
 The file name follows the Android convention (`openssl x509 -subject_hash_old`).
 
+### Certificate origin
+
+The file is the USERTrust RSA certificate cross-signed by AAA Certificate Services, published by
+Sectigo. To rebuild it from the source:
+
+```sh
+curl -O http://crt.sectigo.com/USERTrustRSAAAACA.crt
+openssl x509 -inform DER -in USERTrustRSAAAACA.crt -noout -fingerprint -sha256
+openssl x509 -inform DER -in USERTrustRSAAAACA.crt -out 35105088.0
+```
+
+Expected SHA-256 fingerprint:
+`68:B9:C7:61:21:9A:5B:1F:01:31:78:44:74:66:5D:B6:1B:BD:B1:09:E0:0F:05:CA:9F:74:24:4E:E5:F5:F5:2B`
+
 ## Prerequisites
 
 - A PC with `adb`, from the
